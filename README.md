@@ -5,21 +5,28 @@ Instructions of how to run the program and interact with the token.
 
 You will first need to have Truffle installed, you can do with the command below:
 
-`npm install -g truffle`
+```
+npm install -g truffle
+```
 
 Then you will compile your smart contracts before creating a local blockchain and interacting with it.
 
-`truffle compile`
+```
+truffle compile
+```
 
 To deploy our smart contracts, we're going to need to connect to a blockchain. Truffle has a built-in personal blockchain that can be used for testing. This blockchain is local to your system and does not interact with the main Ethereum network.
 
 You can create this blockchain and interact with it using Truffle Develop.
 
-`truffle develop`
+```
+truffle develop
+```
 
 After, you will see some information that seems like this (your's gonna be different, but alike)
 
-`Truffle Develop started at http://127.0.0.1:9545/
+```
+Truffle Develop started at http://127.0.0.1:9545/
 
 Accounts:
 (0) 0x627306090abab3a6e1400e9345bc60c78a8bef57
@@ -51,17 +58,20 @@ Mnemonic: candy maple cake sugar pudding cream honey rich smooth crumble sweet t
 Ensure you do not use it on production blockchains, or else you risk losing funds.
 
 truffle(development)>
-`
+```
 
 This shows ten accounts (and their private keys) that can be used when interacting with the blockchain.
 
 After running this you will be in truffle develop prompt, so you don't need anymore to use the prefix `truffle`, to migrate your contracts do the blockchain only use the command below
 
-`migrate`
+```
+migrate
+```
 
 You will see something like this in your prompt 
 
-`Starting migrations...
+```
+Starting migrations...
 ======================
 > Network name:    'develop'
 > Network id:      4447
@@ -127,7 +137,7 @@ Summary
 =======
 > Total deployments:   3
 > Final cost:          0.01466268 ETH
-`
+```
 
 This shows the transaction IDs and addresses of your deployed contracts. It also includes a cost summary and real-time status updates.
 
@@ -135,50 +145,50 @@ Now that we have our blockchain set up with the smart contracts migrated, we wil
 
 Begin by establishing both the deployed MetaCoin contract instance and the accounts created by either Truffle's built-in blockchain:
 
-`truffle(development)> let instance = await MetaCoin.deployed()
+```truffle(development)> let instance = await MetaCoin.deployed()
 truffle(development)> let accounts = await web3.eth.getAccounts()
-`
+```
 
 We can then check the metacoin balance of the account that deployed the contract. To better understande, when we deployed the contract the blockchain used our first account (here will be refered as `account[0]`) so this account will have a stating balance of Metacoin, since our contract set this to the owner of the contract.
 
 Use the command below:
 
-`truffle(development)> let balance = await instance.getBalance(accounts[0])
+```truffle(development)> let balance = await instance.getBalance(accounts[0])
 truffle(development)> balance.toNumber()
-`
+```
 
 We will see a result like 100000 because it's the starting balance that our contract is configured to set to the address that call the create function.
 
 See how much ether that balance is worth (and note that the contract defines a metacoin to be worth 2 ether). In here we call the function that is in the ConvertLib.sol that converts our MetaCoin in a value equivalent in ether.
 
-`truffle(development)> let ether = await instance.getBalanceInEth(accounts[0])
+```
+truffle(development)> let ether = await instance.getBalanceInEth(accounts[0])
 truffle(development)> ether.toNumber()
-`
+```
 
 We can now send some MetaCoin from the account that created the contract to a second account, with the following command: 
 
-`truffle(development)> instance.sendCoin(accounts[1], 500)
-`
+```truffle(development)> instance.sendCoin(accounts[1], 500)```
 
 We wil have transfered 500 MetaCoins from `account[0]` to `account[1]`. To check this, use the command below:
 
-`truffle(development)> let received = await instance.getBalance(accounts[1])
+```truffle(development)> let received = await instance.getBalance(accounts[1])
 truffle(development)> received.toNumber()
-`
+```
 
 You will see a result as 500.
 
 We can also check the balance of the `account[0]` from where was sent the transaction to the `account[1]`, with the command below:
 
-`truffle(development)> let newBalance = await instance.getBalance(accounts[0])
+```truffle(development)> let newBalance = await instance.getBalance(accounts[0])
 truffle(development)> newBalance.toNumber()
-`
+```
 
 That's it!
 
 This was a simple project with a creation of a coin and demonstration of how to set up a local blockchain and interact with it, using the truffle development console.
 
-All references to the quickstart of truffle located in `https://trufflesuite.com/docs/truffle/quickstart/`;
+All references to the quickstart of [Truffle](https://trufflesuite.com/docs/truffle/quickstart/);
 
 
 
